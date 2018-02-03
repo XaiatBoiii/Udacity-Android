@@ -1,5 +1,7 @@
 package com.example.android.footballscorecounter;
 
+import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.media.MediaPlayer;
 import android.view.Menu;
 import android.view.View.OnClickListener;
 
+import java.io.File;
+import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 EditText editNameField = (EditText) findViewById(R.id.editTeamA);
                 String name = editNameField.getText().toString();
 
-                new CountDownTimer(30000, 1000) {
+                new CountDownTimer(30000, 500) {
                     public void onTick(long millisUntilFinished) {
                         textView.setText(String.valueOf(counter));
                         counter++;
@@ -96,14 +100,26 @@ public class MainActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
 
-            Button one = this.findViewById(R.id.plusGoalA);
-            final MediaPlayer mp = MediaPlayer.create(this, R.raw.goal);
-            one.setOnClickListener(new OnClickListener(){
 
+            final MediaPlayer goalSoundMediaPlayer = MediaPlayer.create(this, R.raw.goal);
+
+            final Button plusGoalA = this.findViewById(R.id.plusGoalA);
+
+            plusGoalA.setOnClickListener(new View.OnClickListener() {
+                @Override
                 public void onClick(View v) {
-                    mp.start();
+                    goalSoundMediaPlayer.start();
                 }
+
             });
+
+            MediaPlayer ring= MediaPlayer.create(MainActivity.this,R.raw.intromusic);
+            ring.start();
+
+            }
+
+
         }
-    }
 }
+
+
